@@ -12,6 +12,8 @@ class Files(_Files):
         :param callback: function that will be called with the full filename
         :type callback: method (:class:`~nanome.util.file.FileError`, str) -> None
         """
+        if self.plugin._permissions.get('files', 0 ) <= 0:
+            raise Exception("Plugin requires files permission to use this method.")
         id = self.plugin._network._send(_Messages.print_working_directory, None, callback != None)
         self.plugin._save_callback(id, callback)
 
@@ -23,6 +25,8 @@ class Files(_Files):
         :param callback: called when operation is completed with any potential errors.
         :type callback: method (:class:`~nanome.util.file.FileError`) -> None
         """
+        if self.plugin._permissions.get('files', 0 ) <= 0:
+            raise Exception("Plugin requires files permission to use this method.")
         id = self.plugin._network._send(_Messages.cd, directory, callback != None)
         self.plugin._save_callback(id, callback)
 
@@ -34,6 +38,8 @@ class Files(_Files):
         :param callback: function that will be called with contents of the directory
         :type callback: method (:class:`~nanome.util.file.FileError`, list of :class:`~nanome.util.file.FileMeta`) -> None
         """
+        if self.plugin._permissions.get('files', 0 ) <= 0:
+            raise Exception("Plugin requires files permission to use this method.")
         id = self.plugin._network._send(_Messages.ls, directory, callback != None)
         self.plugin._save_callback(id, callback)
 
@@ -47,6 +53,8 @@ class Files(_Files):
         :param callback: called when operation is completed with any potential errors.
         :type callback: method (:class:`~nanome.util.file.FileError`) -> None
         """
+        if self.plugin._permissions.get('files', 0 ) <= 0:
+            raise Exception("Plugin requires files permission to use this method.")
         id = self.plugin._network._send(_Messages.mv, (source, dest), callback != None)
         self.plugin._save_callback(id, callback)
 
@@ -60,6 +68,9 @@ class Files(_Files):
         :param callback: called with the path to the file and any potential errors
         :type callback: method (:class:`~nanome.util.file.FileError`, str) -> None
         """
+        if self.plugin._permissions.get('files', 0 ) <= 0:
+            raise Exception("Plugin requires files permission to use this method.")
+
         def cb(error, file):
             if (error == FileErrorCode.no_error):
                 with open(dest, 'wb') as ofile:
@@ -79,6 +90,8 @@ class Files(_Files):
         :param callback: called when operation is completed with any potential errors.
         :type callback: method (:class:`~nanome.util.file.FileError`) -> None
         """
+        if self.plugin._permissions.get('files', 0 ) <= 0:
+            raise Exception("Plugin requires files permission to use this method.")
         with open(source, "rb") as f:
             file = f.read()
             f.close()
@@ -93,6 +106,8 @@ class Files(_Files):
         :param callback: called when operation is completed with any potential errors.
         :type callback: method (:class:`~nanome.util.file.FileError`) -> None
         """
+        if self.plugin._permissions.get('files', 0 ) <= 0:
+            raise Exception("Plugin requires files permission to use this method.")
         id = self.plugin._network._send(_Messages.rm, target, callback != None)
         self.plugin._save_callback(id, callback)
 
@@ -104,6 +119,8 @@ class Files(_Files):
         :param callback: called when operation is completed with any potential errors.
         :type callback: method (:class:`~nanome.util.file.FileError`) -> None
         """
+        if self.plugin._permissions.get('files', 0 ) <= 0:
+            raise Exception("Plugin requires files permission to use this method.")
         id = self.plugin._network._send(_Messages.rmdir, target, callback != None)
         self.plugin._save_callback(id, callback)
 
@@ -117,6 +134,8 @@ class Files(_Files):
         :param callback: called when operation is completed with any potential errors.
         :type callback: method (:class:`~nanome.util.file.FileError`) -> None
         """
+        if self.plugin._permissions.get('files', 0 ) <= 0:
+            raise Exception("Plugin requires files permission to use this method.")
         id = self.plugin._network._send(_Messages.cp, (source, dest), callback != None)
         self.plugin._save_callback(id, callback)
 
@@ -128,5 +147,7 @@ class Files(_Files):
         :param callback: called when operation is completed with any potential errors.
         :type callback: method (:class:`~nanome.util.file.FileError`) -> None
         """
+        if self.plugin._permissions.get('files', 0 ) <= 0:
+            raise Exception("Plugin requires files permission to use this method.")
         id = self.plugin._network._send(_Messages.mkdir, target, callback != None)
         self.plugin._save_callback(id, callback)
